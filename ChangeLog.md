@@ -9,10 +9,15 @@ https://github.com/fortra/impacket/commits/master
 1. Library improvements
     * Removed dsinternals dependency (@anadrianmanrique)
     * Fixed srvs.hNetrShareEnum returning erronous shares (@cnotin)
+    * Fixed lmhash computing to support non standard characters in the password (@anadrianmanrique)
+    * Assorted fixes when processing Unicode data (@alexisbalbachan)
+    * Added `[MS-GKDI]` Group Key Distribution Protocol implementation (@zblurx)
 
 2. Examples improvements
     * [secretsdump.py](examples/secretsdump.py):
         * Double DC Sync performance for DCs supporting SID lookups (@tomspencer)
+        * Added ability to skip dumping of SAM or SECURITY hives when performing remote operations (@RazzburyPi)
+        * Added ability to specify users to skip when dumping NTDS (@RazzburyPi)
     * [ticketer.py](examples/ticketer.py):
         * Support to create Sapphire tickets (@ShutdownRepo)
     * [GetUserSPNs.py](examples/GetUserSPNs.py), [getTGT.py](examples/getTGT.py):
@@ -21,19 +26,39 @@ https://github.com/fortra/impacket/commits/master
         * Fix kerberos with remoteHost & add '-target-ip'(@XiaoliChan)
     * [ntlmrelayx.py](examples/ntlmrelayx.py):
         * Added the creation of a new machine account through SMB (@BlWasp)
+        * NTLMRelayX Multirelay fixes for target handling (@alexisbalbachan)
+        * Writes certificates to file rather than outputting b64 to console (@RazzburyPi)
+        * Improved ability to continue relaying to ADCS web enrollment endpoint in order to request multiple certificates for different users (@RazzburyPi)
+        * Fixed compatibility issue with other SMB clients connecting to the SOCKS proxy created by ntlmrelayx (@jfjallid)
+        * Allow configuration of the SOCKS5 address and port (@rtpt-erikgeiser)
+        * Fixed implementation of MSSQLShell (@gabrielg5)
     * [getST.py](examples/getST.py):
         * Added -self, -altservice and -u2u  for S4U2self abuse, S4U2self+u2u, and service substitution (@ShutdownRepo)
     * [reg.py](examples/reg.py):
         * Start remote registry as unprivileged user in reg.py (@dadevel)
+        * Allowing adding Binary values (@dc3l1ne)
+    * [smbclient.py](examples/smbclient.py):
+    	* Added ability to provide an output file that the smbclient mini shell will write commands and output to (@RazzburyPi)
+     	* Fixed path parse issue when running `tree` command (@trietend)
+    * [DumpNTLMInfo.py](examples/DumpNTLMInfo.py):
+    	* Allow execution on non-default ports (@jeffmcjunkin)
+     	* Fixed KeyError exception when running with a Windows 2003 target (@XiaoliChan)
+    * [findDelegation.py](examples/findDelegation.py):
+    	* Added new column to show if SPN exists (@p0dalirius)
+    * [mssqlclient.py](examples/mssqlclient.py):
+     	* Added `-target-ip` parameter to allow Kerberos authentication without much change in the DNS configuration of the local machine (@Palkovsky)
+    * [mssqlshell.py](examples/mssqlshell.py):
+    	* Switching back to original DB after running `enum_impersonate` command (@exploide)
 
 3. New examples
-    * [describeTicket.py](examples/describeTicket.py): Ticket describer and decrypter (@ShutdownRepo)\
+    * [describeTicket.py](examples/describeTicket.py): Ticket describer and decrypter. (@ShutdownRepo)
     * [GetADComputers.py](examples/GetADComputers.py): Query's DC via LDAP and returns the COMPUTER objects and the useful attributes such as full dns name, operating system name and version. (@F-Masood)
-    * [readLAPS.py](examples/readLAPS.py): tries to read all the LAPS password from the current domain computers (@F-Masood)
+    * [GetLAPSPassword.py](examples/GetLAPSPassword.py): Extract LAPS passwords from LDAP (@zblurx and @dru1d-foofus)
+    * [dacledit.py](examples/dacledit.py): This script can be used to read, write, remove, backup, restore ACEs (Access Control Entries) in an object DACL (Discretionary Access Control List). (@_nwodtuhs) (@BlWasp_) (@Wlayzz)
 
 As always, thanks a lot to all these contributors that make this library better every day (up to now):
 
-@tomspencer @anadrianmanrique @ShutdownRepo @dadevel @gjhami @NtAlexio2 @F-Masood @BlWasp @gabrielg5 @XiaoliChan @omry99
+@tomspencer @anadrianmanrique @ShutdownRepo @dadevel @gjhami @NtAlexio2 @F-Masood @BlWasp @gabrielg5 @XiaoliChan @omry99 @Wlayzz @themaks @alexisbalbachan @RazzburyPi @jeffmcjunkin @p0dalirius @dc3l1ne @jfjallid @Palkovsky @rtpt-erikgeiser @trietend @zblurx @dru1d-foofus
 
 	  
 ## Impacket v0.11.0 (Aug 2023):
